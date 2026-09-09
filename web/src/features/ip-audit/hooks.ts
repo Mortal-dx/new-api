@@ -160,8 +160,10 @@ function useInvalidateIpAudit() {
   const queryClient = useQueryClient()
   return {
     onSuccess: () => {
-      // Query keys are element-matched, not string-prefixed: 'ip-audit-config'
-      // is NOT covered by ['ip-audit'], so each real key must be listed here.
+      // Query keys are element-matched, not string-prefixed. ['ip-audit']
+      // covers the main table/stats key ['ip-audit', month, ...] but none of
+      // the dashed keys, so every distinct first element must be listed here.
+      queryClient.invalidateQueries({ queryKey: ['ip-audit'] })
       queryClient.invalidateQueries({ queryKey: ['ip-audit-config'] })
       queryClient.invalidateQueries({ queryKey: ['ip-audit-list'] })
       queryClient.invalidateQueries({ queryKey: ['ip-audit-month-rows'] })
