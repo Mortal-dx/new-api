@@ -239,11 +239,8 @@ export function AuditTable(props: AuditTableProps) {
     )
   }
 
-  // 处理动作只针对未加入名单的新增 IP：待处理 → 标记已处理；已处理 → 撤销
+  // 处理动作只看处理状态（新增待处理 → 标记已处理；已处理 → 撤销），与黑白名单互不影响
   const renderHandleAction = (row: IpAuditRow) => {
-    if (row.hit || row.white) {
-      return <span className='text-muted-foreground/40 text-xs'>—</span>
-    }
     const pending = row.is_new && !row.handled
     const handled = row.is_new && row.handled
     if (!pending && !handled) {

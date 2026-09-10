@@ -133,7 +133,7 @@ export function DetailSheet(props: DetailSheetProps) {
 
   if (!row) return null
 
-  const handled = row.is_new && !row.white && row.handled
+  const handled = row.is_new && row.handled
 
   const statusText = row.hit
     ? t('Blacklist hit!')

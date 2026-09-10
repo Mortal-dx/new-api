@@ -43,21 +43,19 @@ function Tag({
 }
 
 /**
- * Status tags for one audit row, mirroring the frozen prototype:
- * hit wins over whitelist; a "new" row is pending or handled; everything
- * else that is neither new nor listed is existing.
+ * Handling-status tags for one audit row. Purely about the handling state
+ * (new pending / new handled / existing); blacklist and whitelist membership
+ * is orthogonal and is shown next to the IP and in the list action column.
  */
 export function StatusTags({ row }: { row: IpAuditRow }) {
   const { t } = useTranslation()
 
-  const pending = row.is_new && !row.white && !row.handled
-  const handled = row.is_new && !row.white && row.handled
-  const existing = !row.hit && !row.white && !row.is_new
+  const pending = row.is_new && !row.handled
+  const handled = row.is_new && row.handled
+  const existing = !row.is_new
 
   return (
     <span className='flex flex-wrap items-center gap-1'>
-      {row.hit && <Tag className={TAG_STYLES.hit}>🚫 {t('Blacklist')}</Tag>}
-      {row.white && <Tag className={TAG_STYLES.white}>✅ {t('Whitelist')}</Tag>}
       {handled && <Tag className={TAG_STYLES.handled}>{t('New · Handled')}</Tag>}
       {pending && <Tag className={TAG_STYLES.new}>★ {t('New Pending')}</Tag>}
       {existing && <Tag className={TAG_STYLES.exist}>{t('Existing')}</Tag>}
