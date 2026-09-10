@@ -39,7 +39,7 @@ import { cn } from '@/lib/utils'
 
 import { PAGE_SIZE_OPTIONS, ROW_HIT_CLASS } from '../constants'
 import type { IpAuditListType, IpAuditRow } from '../types'
-import { NetTypeTag, StatusTags } from './status-tag'
+import { StatusTags } from './status-tag'
 
 function formatShortDate(ts: number): string {
   if (!ts) return ''
@@ -265,15 +265,15 @@ export function AuditTable(props: AuditTableProps) {
   return (
     <>
       <div className='overflow-x-auto'>
-        <Table className='min-w-[1420px] table-fixed'>
+        <Table className='min-w-[1460px] table-fixed'>
           <TableHeader>
             <TableRow className='bg-muted/40 hover:bg-muted/40'>
               <TableHead className='w-[190px] px-5'>{t('Account')}</TableHead>
               <TableHead className='w-[170px] px-5'>{t('Token')}</TableHead>
               <TableHead className='w-[190px] px-5'>{t('IP')}</TableHead>
-              <TableHead className='w-[110px] px-5'>{t('Network')}</TableHead>
               <TableHead className='w-[210px] px-5'>{t('Status')}</TableHead>
               <TableHead className='w-[160px] px-5'>{t('Requests')}</TableHead>
+              <TableHead className='w-[150px] px-5'>{t('Consumption')}</TableHead>
               <TableHead className='w-[120px] px-5'>{t('First Seen')}</TableHead>
               <TableHead className='w-[140px] px-5'>{t('Last Call')}</TableHead>
               <TableHead className='w-[210px] px-5'>{t('Actions')}</TableHead>
@@ -323,21 +323,23 @@ export function AuditTable(props: AuditTableProps) {
                     )}
                   </TableCell>
                   <TableCell className='px-5'>
-                    <NetTypeTag netType={row.net_type} />
-                  </TableCell>
-                  <TableCell className='px-5'>
                     <StatusTags row={row} />
                   </TableCell>
                   <TableCell className='px-5'>
                     {row.cur_calls.toLocaleString()}
-                    {row.cur_quota > 0 && (
-                      <CellSub>{formatQuota(row.cur_quota)}</CellSub>
-                    )}
                     {row.prev_calls > 0 && (
                       <CellSub>
                         {t('Last month: {{n}}', {
                           n: row.prev_calls.toLocaleString(),
                         })}
+                      </CellSub>
+                    )}
+                  </TableCell>
+                  <TableCell className='px-5'>
+                    {row.cur_quota > 0 ? formatQuota(row.cur_quota) : '-'}
+                    {row.prev_quota > 0 && (
+                      <CellSub>
+                        {t('Last month: {{n}}', { n: formatQuota(row.prev_quota) })}
                       </CellSub>
                     )}
                   </TableCell>

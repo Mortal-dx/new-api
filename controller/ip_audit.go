@@ -122,7 +122,7 @@ func ExportIpAuditAuditCsv(c *gin.Context) {
 	var buf bytes.Buffer
 	buf.WriteString("\ufeff") // UTF-8 BOM, so Excel opens it without garbled Chinese
 	writer := csv.NewWriter(&buf)
-	_ = writer.Write([]string{"账号", "用户ID", "令牌", "IP", "内外网", "状态", "本月调用", "消费额度($)", "上月调用", "首次出现", "最新调用", "处理人", "处理时间"})
+	_ = writer.Write([]string{"账号", "用户ID", "令牌", "IP", "状态", "本月调用", "消费额度($)", "上月调用", "首次出现", "最新调用", "处理人", "处理时间"})
 	for _, row := range rows {
 		status := "存量"
 		switch {
@@ -152,7 +152,6 @@ func ExportIpAuditAuditCsv(c *gin.Context) {
 			strconv.Itoa(row.UserId),
 			row.TokenName,
 			row.Ip,
-			row.NetType,
 			status,
 			strconv.FormatInt(row.CurCalls, 10),
 			strconv.FormatFloat(float64(row.CurQuota)/common.QuotaPerUnit, 'f', -1, 64),

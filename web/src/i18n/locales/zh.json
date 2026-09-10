@@ -5345,6 +5345,8 @@
     "Filter by IP / token...": "按 IP / 令牌筛选...",
     "Account": "账号",
     "Calls (This Month)": "本月调用",
+    "Consumption": "消耗费用",
+    "Cost (This Month)": "本月花费",
     "Calls (Last Month)": "上月调用",
     "Network": "内外网",
     "Internal": "内网",

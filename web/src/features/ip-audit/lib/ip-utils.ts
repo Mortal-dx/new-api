@@ -134,11 +134,3 @@ export function validateEntryFormat(raw: string): EntryFormatError | null {
   }
   return null
 }
-
-/**
- * The backend reports net_type as a code ('internal'/'external') or as the
- * localized literal; normalize so the UI can always translate the label.
- */
-export function isInternalNet(netType: string): boolean {
-  return netType === 'internal' || netType === '内网'
-}

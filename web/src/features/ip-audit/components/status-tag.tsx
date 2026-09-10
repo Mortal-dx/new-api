@@ -21,7 +21,6 @@ import { useTranslation } from 'react-i18next'
 import { cn } from '@/lib/utils'
 
 import { TAG_STYLES } from '../constants'
-import { isInternalNet } from '../lib/ip-utils'
 import type { IpAuditRow } from '../types'
 
 function Tag({
@@ -40,23 +39,6 @@ function Tag({
     >
       {children}
     </span>
-  )
-}
-
-/** Neutral network tag with a colored dot: internal = blue, external = red. */
-export function NetTypeTag({ netType }: { netType: string }) {
-  const { t } = useTranslation()
-  const internal = isInternalNet(netType)
-  return (
-    <Tag className={TAG_STYLES.net}>
-      <span
-        className={cn(
-          'size-1.5 rounded-full',
-          internal ? 'bg-green-600' : 'bg-red-600'
-        )}
-      />
-      {internal ? t('Internal') : t('External')}
-    </Tag>
   )
 }
 

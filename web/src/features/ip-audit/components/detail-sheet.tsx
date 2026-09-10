@@ -37,9 +37,8 @@ import { useChartTheme } from '@/lib/use-chart-theme'
 import { VCHART_OPTION } from '@/lib/vchart'
 
 import { useIpAuditDetailQuery } from '../hooks'
-import { isInternalNet } from '../lib/ip-utils'
 import type { IpAuditRow } from '../types'
-import { NetTypeTag, StatusTags } from './status-tag'
+import { StatusTags } from './status-tag'
 
 function formatDateTime(ts: number): string {
   if (!ts) return '-'
@@ -162,30 +161,27 @@ export function DetailSheet(props: DetailSheetProps) {
             </span>
           </SheetTitle>
           <SheetDescription>
-            {t('Account')} {row.user_name} ({row.user_id}) · {t('Token')}{' '}
-            {row.token_name}
+            {t('Account')} {row.user_name} · {t('Token')} {row.token_name}
           </SheetDescription>
         </SheetHeader>
 
         <div className='min-h-0 flex-1 overflow-y-auto px-5 py-4 sm:px-6'>
           <div className='mb-4 grid grid-cols-1 gap-x-4 gap-y-3 sm:grid-cols-2 lg:grid-cols-3'>
             <Kv label={t('IP / Range')} value={<span className='font-mono'>{row.ip}</span>} />
-            <Kv label={t('Network')} value={<NetTypeTag netType={row.net_type} />} />
             <Kv
               label={t('Status')}
               value={statusText}
               tone={row.hit ? 'red' : row.white ? 'green' : handled ? 'blue' : undefined}
             />
-            <Kv
-              label={t('Account')}
-              value={`${row.user_name} (${row.user_id})`}
-            />
+            <Kv label={t('Account')} value={row.user_name} />
             <Kv label={t('Token')} value={<span className='font-mono'>{row.token_name}</span>} />
             <Kv
               label={t('Calls (This Month)')}
-              value={`${row.cur_calls.toLocaleString()}${
-                row.cur_quota > 0 ? ` · ${formatQuota(row.cur_quota)}` : ''
-              }`}
+              value={row.cur_calls.toLocaleString()}
+            />
+            <Kv
+              label={t('Cost (This Month)')}
+              value={row.cur_quota > 0 ? formatQuota(row.cur_quota) : '-'}
             />
             <Kv
               label={t('Calls (Last Month)')}
