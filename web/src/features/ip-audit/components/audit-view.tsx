@@ -131,7 +131,7 @@ export function AuditView() {
   }
 
   return (
-    <div>
+    <div className='mx-auto w-full max-w-[1600px]'>
       <StatCards stats={data?.stats} isLoading={isLoading} />
 
       <div className='bg-card overflow-hidden rounded-xl border'>
