@@ -273,19 +273,19 @@ export function AuditTable(props: AuditTableProps) {
   return (
     <>
       <div className='overflow-x-auto'>
-        <Table className='min-w-[1640px] table-fixed'>
+        <Table className='min-w-[1080px]'>
           <TableHeader>
             <TableRow className='bg-muted/40 hover:bg-muted/40'>
-              <TableHead className='w-[190px] px-4'>{t('Account')}</TableHead>
-              <TableHead className='w-[170px] px-4'>{t('Token')}</TableHead>
-              <TableHead className='w-[190px] px-4'>{t('IP')}</TableHead>
-              <TableHead className='w-[250px] px-4'>{t('Status')}</TableHead>
-              <TableHead className='w-[160px] px-4'>{t('Requests')}</TableHead>
-              <TableHead className='w-[150px] px-4'>{t('Consumption')}</TableHead>
-              <TableHead className='w-[120px] px-4'>{t('First Seen')}</TableHead>
-              <TableHead className='w-[140px] px-4'>{t('Last Call')}</TableHead>
-              <TableHead className='w-[200px] px-4'>{t('Blacklist / Whitelist')}</TableHead>
-              <TableHead className='w-[120px] px-4'>{t('Handling')}</TableHead>
+              <TableHead className='px-4'>{t('Account')}</TableHead>
+              <TableHead className='px-4'>{t('Token')}</TableHead>
+              <TableHead className='px-4'>{t('IP')}</TableHead>
+              <TableHead className='px-4'>{t('Status')}</TableHead>
+              <TableHead className='px-4 text-right'>{t('Requests')}</TableHead>
+              <TableHead className='px-4 text-right'>{t('Consumption')}</TableHead>
+              <TableHead className='px-4'>{t('First Seen')}</TableHead>
+              <TableHead className='px-4'>{t('Last Call')}</TableHead>
+              <TableHead className='px-4'>{t('Blacklist / Whitelist')}</TableHead>
+              <TableHead className='px-4'>{t('Handling')}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -307,11 +307,15 @@ export function AuditTable(props: AuditTableProps) {
                   onClick={() => onDetail(row)}
                 >
                   <TableCell className='px-4'>
-                    <span className='font-medium'>{row.user_name}</span>
+                    <span className='block max-w-[180px] truncate font-medium'>
+                      {row.user_name}
+                    </span>
                     <CellSub>ID {row.user_id}</CellSub>
                   </TableCell>
                   <TableCell className='px-4 font-mono text-[12.5px]'>
-                    {row.token_name}
+                    <span className='block max-w-[200px] truncate'>
+                      {row.token_name}
+                    </span>
                   </TableCell>
                   <TableCell className='px-4'>
                     <span className='font-mono text-[12.5px] font-semibold'>
@@ -334,7 +338,7 @@ export function AuditTable(props: AuditTableProps) {
                   <TableCell className='px-4'>
                     <StatusTags row={row} />
                   </TableCell>
-                  <TableCell className='px-4'>
+                  <TableCell className='px-4 text-right'>
                     {row.cur_calls.toLocaleString()}
                     {row.prev_calls > 0 && (
                       <CellSub>
@@ -344,7 +348,7 @@ export function AuditTable(props: AuditTableProps) {
                       </CellSub>
                     )}
                   </TableCell>
-                  <TableCell className='px-4'>
+                  <TableCell className='px-4 text-right'>
                     {row.cur_quota > 0 ? formatQuota(row.cur_quota) : '-'}
                     {row.prev_quota > 0 && (
                       <CellSub>
