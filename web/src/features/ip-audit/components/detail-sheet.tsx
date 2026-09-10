@@ -222,8 +222,8 @@ export function DetailSheet(props: DetailSheetProps) {
             />
             {handled && (
               <Kv
-                label={t('Handled By')}
-                value={`${row.handled_by} · ${formatDateTime(row.handled_at)}`}
+                label={t('Handled At')}
+                value={formatDateTime(row.handled_at)}
                 tone='blue'
               />
             )}

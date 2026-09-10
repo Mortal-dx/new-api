@@ -41,11 +41,6 @@ import { PAGE_SIZE_OPTIONS, ROW_HIT_CLASS } from '../constants'
 import type { IpAuditListType, IpAuditRow } from '../types'
 import { StatusTags } from './status-tag'
 
-function formatShortDate(ts: number): string {
-  if (!ts) return ''
-  return dayjs(ts * 1000).format('MM-DD')
-}
-
 function formatFullDate(ts: number): string {
   if (!ts) return ''
   return dayjs(ts * 1000).format('YYYY-MM-DD')
@@ -325,9 +320,8 @@ export function AuditTable(props: AuditTableProps) {
                     )}
                     {!row.hit && !row.white && row.handled && (
                       <CellSub tone='blue'>
-                        {t('Verified · {{name}} {{date}}', {
-                          name: row.handled_by,
-                          date: formatShortDate(row.handled_at),
+                        {t('Verified · {{date}}', {
+                          date: formatDateTime(row.handled_at),
                         })}
                       </CellSub>
                     )}

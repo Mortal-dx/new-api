@@ -5353,7 +5353,7 @@
     "External": "外网",
     "In blacklist": "在黑名单中",
     "Confirmed safe": "已确认合法",
-    "Verified · {{name}} {{date}}": "已核实 · {{name}} {{date}}",
+    "Verified · {{date}}": "已核实 · {{date}}",
     "New · Handled": "新增·已处理",
     "+ Black": "+ 黑",
     "+ White": "+ 白",

@@ -5353,7 +5353,7 @@
     "External": "External",
     "In blacklist": "In blacklist",
     "Confirmed safe": "Confirmed safe",
-    "Verified · {{name}} {{date}}": "Verified · {{name}} {{date}}",
+    "Verified · {{date}}": "Verified · {{date}}",
     "New · Handled": "New · Handled",
     "+ Black": "+ Black",
     "+ White": "+ White",
