@@ -20,6 +20,7 @@ import { Send } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { PasswordInput } from '@/components/password-input'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
@@ -121,7 +122,7 @@ export function AlertSettings() {
           <Label className='text-muted-foreground sm:justify-end sm:text-right'>
             AppKey
           </Label>
-          <Input
+          <PasswordInput
             value={form.appkey}
             className='h-9'
             placeholder={t(
@@ -133,7 +134,7 @@ export function AlertSettings() {
           <Label className='text-muted-foreground sm:justify-end sm:text-right'>
             {t('Card Template ID')}
           </Label>
-          <Input
+          <PasswordInput
             value={form.template_id}
             className='h-9'
             placeholder={t(
