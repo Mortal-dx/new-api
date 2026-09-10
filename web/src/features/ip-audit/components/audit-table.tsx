@@ -273,7 +273,7 @@ export function AuditTable(props: AuditTableProps) {
   return (
     <>
       <div className='overflow-x-auto'>
-        <Table className='min-w-[1080px]'>
+        <Table className='mx-auto min-w-[1080px] max-w-[1500px]'>
           <TableHeader>
             <TableRow className='bg-muted/40 hover:bg-muted/40'>
               <TableHead className='px-4'>{t('Account')}</TableHead>
