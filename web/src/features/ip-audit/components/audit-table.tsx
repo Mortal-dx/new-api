@@ -273,19 +273,19 @@ export function AuditTable(props: AuditTableProps) {
   return (
     <>
       <div className='overflow-x-auto'>
-        <Table className='mx-auto min-w-[1080px] max-w-[1500px]'>
+        <Table className='table-fixed min-w-[1410px]'>
           <TableHeader>
             <TableRow className='bg-muted/40 hover:bg-muted/40'>
-              <TableHead className='px-4'>{t('Account')}</TableHead>
-              <TableHead className='px-4'>{t('Token')}</TableHead>
-              <TableHead className='px-4'>{t('IP')}</TableHead>
-              <TableHead className='px-4'>{t('Status')}</TableHead>
-              <TableHead className='px-4 text-right'>{t('Requests')}</TableHead>
-              <TableHead className='px-4 text-right'>{t('Consumption')}</TableHead>
-              <TableHead className='px-4'>{t('First Seen')}</TableHead>
-              <TableHead className='px-4'>{t('Last Call')}</TableHead>
-              <TableHead className='px-4'>{t('Blacklist / Whitelist')}</TableHead>
-              <TableHead className='px-4'>{t('Handling')}</TableHead>
+              <TableHead className='w-[150px] px-4 text-center'>{t('Account')}</TableHead>
+              <TableHead className='w-[150px] px-4 text-center'>{t('Token')}</TableHead>
+              <TableHead className='w-[130px] px-4 text-center'>{t('IP')}</TableHead>
+              <TableHead className='w-[230px] px-4 text-center'>{t('Status')}</TableHead>
+              <TableHead className='w-[100px] px-4 text-center'>{t('Requests')}</TableHead>
+              <TableHead className='w-[100px] px-4 text-center'>{t('Consumption')}</TableHead>
+              <TableHead className='w-[110px] px-4 text-center'>{t('First Seen')}</TableHead>
+              <TableHead className='w-[130px] px-4 text-center'>{t('Last Call')}</TableHead>
+              <TableHead className='w-[180px] px-4 text-center'>{t('Blacklist / Whitelist')}</TableHead>
+              <TableHead className='w-[130px] px-4 text-center'>{t('Handling')}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -307,15 +307,13 @@ export function AuditTable(props: AuditTableProps) {
                   onClick={() => onDetail(row)}
                 >
                   <TableCell className='px-4'>
-                    <span className='block max-w-[180px] truncate font-medium'>
+                    <span className='block truncate font-medium'>
                       {row.user_name}
                     </span>
                     <CellSub>ID {row.user_id}</CellSub>
                   </TableCell>
                   <TableCell className='px-4 font-mono text-[12.5px]'>
-                    <span className='block max-w-[200px] truncate'>
-                      {row.token_name}
-                    </span>
+                    <span className='block truncate'>{row.token_name}</span>
                   </TableCell>
                   <TableCell className='px-4'>
                     <span className='font-mono text-[12.5px] font-semibold'>
@@ -336,9 +334,11 @@ export function AuditTable(props: AuditTableProps) {
                     )}
                   </TableCell>
                   <TableCell className='px-4'>
-                    <StatusTags row={row} />
+                    <div className='flex justify-center'>
+                      <StatusTags row={row} />
+                    </div>
                   </TableCell>
-                  <TableCell className='px-4 text-right'>
+                  <TableCell className='px-4 text-center'>
                     {row.cur_calls.toLocaleString()}
                     {row.prev_calls > 0 && (
                       <CellSub>
@@ -348,7 +348,7 @@ export function AuditTable(props: AuditTableProps) {
                       </CellSub>
                     )}
                   </TableCell>
-                  <TableCell className='px-4 text-right'>
+                  <TableCell className='px-4 text-center'>
                     {row.cur_quota > 0 ? formatQuota(row.cur_quota) : '-'}
                     {row.prev_quota > 0 && (
                       <CellSub>
@@ -356,15 +356,15 @@ export function AuditTable(props: AuditTableProps) {
                       </CellSub>
                     )}
                   </TableCell>
-                  <TableCell className='px-4 text-[12.5px]'>
+                  <TableCell className='px-4 text-center text-[12.5px]'>
                     {formatFullDate(row.first_seen)}
                   </TableCell>
-                  <TableCell className='px-4 text-[12.5px]'>
+                  <TableCell className='px-4 text-center text-[12.5px]'>
                     {formatDateTimeShort(row.last_seen)}
                   </TableCell>
                   <TableCell className='px-4'>
                     <div
-                      className='flex flex-wrap items-center gap-1'
+                      className='flex flex-wrap items-center justify-center gap-1'
                       onClick={(event) => event.stopPropagation()}
                     >
                       {renderListActions(row)}
@@ -372,7 +372,7 @@ export function AuditTable(props: AuditTableProps) {
                   </TableCell>
                   <TableCell className='px-4'>
                     <div
-                      className='flex items-center gap-1'
+                      className='flex items-center justify-center gap-1'
                       onClick={(event) => event.stopPropagation()}
                     >
                       {renderHandleAction(row)}
