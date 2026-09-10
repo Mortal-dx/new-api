@@ -627,10 +627,10 @@ func GetIpAuditRows(month string, accounts []IpAuditAccount) ([]IpAuditRow, erro
 			FirstSeen:   firstSeen,
 			LastSeen:    agg.LastSeen,
 		}
-		if user, ok := userNames[agg.UserId]; ok {
-			if user.DisplayName != "" {
-				row.UserName = user.DisplayName
-			} else if user.Username != "" {
+		// 账号列始终显示用户账号（username，工号/登录名），
+		// 不展示 display_name 中文名；日志聚合缺失 username 时从 users 表兜底
+		if row.UserName == "" {
+			if user, ok := userNames[agg.UserId]; ok {
 				row.UserName = user.Username
 			}
 		}
