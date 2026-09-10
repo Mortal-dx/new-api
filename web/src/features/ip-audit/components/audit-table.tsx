@@ -51,9 +51,9 @@ function formatFullDate(ts: number): string {
   return dayjs(ts * 1000).format('YYYY-MM-DD')
 }
 
-function formatDateTimeShort(ts: number): string {
+function formatDateTime(ts: number): string {
   if (!ts) return ''
-  return dayjs(ts * 1000).format('MM-DD HH:mm')
+  return dayjs(ts * 1000).format('YYYY-MM-DD HH:mm:ss')
 }
 
 function CellSub({
@@ -203,17 +203,19 @@ export function AuditTable(props: AuditTableProps) {
     onRemoveFromList,
   } = props
 
+  // 紧凑按钮保证一行放下并整体居中于列名正下方（mr-1 会打破 justify-center 的对称）
+  const listBtn = 'h-7 px-2 text-xs whitespace-nowrap'
   const renderListActions = (row: IpAuditRow) => {
     if (row.hit) {
       return (
-        <Button variant='outline' size='sm' onClick={() => onRemoveFromList(row, 1)}>
+        <Button variant='outline' size='sm' className={listBtn} onClick={() => onRemoveFromList(row, 1)}>
           {t('Remove from Blacklist')}
         </Button>
       )
     }
     if (row.white) {
       return (
-        <Button variant='outline' size='sm' onClick={() => onRemoveFromList(row, 2)}>
+        <Button variant='outline' size='sm' className={listBtn} onClick={() => onRemoveFromList(row, 2)}>
           {t('Remove from Whitelist')}
         </Button>
       )
@@ -223,7 +225,7 @@ export function AuditTable(props: AuditTableProps) {
         <Button
           variant='destructive'
           size='sm'
-          className='mr-1'
+          className={listBtn}
           onClick={() => onAddToList(row, 1)}
         >
           {t('+ Black')}
@@ -231,6 +233,7 @@ export function AuditTable(props: AuditTableProps) {
         <Button
           variant='outline'
           size='sm'
+          className={listBtn}
           onClick={() => onAddToList(row, 2)}
         >
           {t('+ White')}
@@ -344,7 +347,7 @@ export function AuditTable(props: AuditTableProps) {
                     {formatFullDate(row.first_seen)}
                   </TableCell>
                   <TableCell className='px-4 text-center text-[12.5px]'>
-                    {formatDateTimeShort(row.last_seen)}
+                    {formatDateTime(row.last_seen)}
                   </TableCell>
                   <TableCell className='px-4'>
                     <div
