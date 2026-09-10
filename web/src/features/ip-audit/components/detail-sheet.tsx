@@ -105,16 +105,26 @@ export function DetailSheet(props: DetailSheetProps) {
   )
 
   const days = detail?.days ?? []
-  // 无调用的日期不进图表：不画空柱、悬浮也不出现日期/次数
   const chartData = useMemo(
-    () =>
-      days
-        .filter((d) => d.calls > 0)
-        .map((d) => ({ day: String(d.day), calls: d.calls })),
+    () => days.map((d) => ({ day: String(d.day), calls: d.calls })),
     [days]
   )
-  const chartSpec = useMemo(
-    () => ({
+  const chartSpec = useMemo(() => {
+    // 0 次的天 title/key/value 全部返回 undefined：内容为空时 VChart 判定
+    // isEmpty，直接不弹提示框（x 轴仍保留整月每一天）
+    const titleOf = (datum: Record<string, unknown>) =>
+      Number(datum?.calls) > 0
+        ? formatDay(month, Number(datum?.day) || 0)
+        : undefined
+    const labelOf = (datum: Record<string, unknown>) =>
+      Number(datum?.calls) > 0 ? t('Requests') : undefined
+    const valueOf = (datum: Record<string, unknown>) =>
+      Number(datum?.calls) > 0
+        ? t('{{count}} calls', {
+            count: (Number(datum?.calls) || 0).toLocaleString(),
+          })
+        : undefined
+    return {
       type: 'bar',
       data: [{ id: 'calls', values: chartData }],
       xField: 'day',
@@ -128,39 +138,16 @@ export function DetailSheet(props: DetailSheetProps) {
       },
       tooltip: {
         mark: {
-          title: {
-            value: (datum: Record<string, unknown>) =>
-              formatDay(month, Number(datum?.day) || 0),
-          },
-          content: [
-            {
-              key: t('Requests'),
-              value: (datum: Record<string, unknown>) =>
-                t('{{count}} calls', {
-                  count: (Number(datum?.calls) || 0).toLocaleString(),
-                }),
-            },
-          ],
+          title: { value: titleOf },
+          content: [{ key: labelOf, value: valueOf }],
         },
         dimension: {
-          title: {
-            value: (datum: Record<string, unknown>) =>
-              formatDay(month, Number(datum?.day) || 0),
-          },
-          content: [
-            {
-              key: t('Requests'),
-              value: (datum: Record<string, unknown>) =>
-                t('{{count}} calls', {
-                  count: (Number(datum?.calls) || 0).toLocaleString(),
-                }),
-            },
-          ],
+          title: { value: titleOf },
+          content: [{ key: labelOf, value: valueOf }],
         },
       },
-    }),
-    [chartData, month, t]
-  )
+    }
+  }, [chartData, month, t])
 
   const activeDays = useMemo(
     () => days.filter((d) => d.calls > 0).sort((a, b) => b.day - a.day),
