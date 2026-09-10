@@ -122,8 +122,40 @@ export function DetailSheet(props: DetailSheetProps) {
           cornerRadius: [3, 3, 0, 0],
         },
       },
+      tooltip: {
+        mark: {
+          title: {
+            value: (datum: Record<string, unknown>) =>
+              formatDay(month, Number(datum?.day) || 0),
+          },
+          content: [
+            {
+              key: t('Requests'),
+              value: (datum: Record<string, unknown>) =>
+                t('{{count}} calls', {
+                  count: (Number(datum?.calls) || 0).toLocaleString(),
+                }),
+            },
+          ],
+        },
+        dimension: {
+          title: {
+            value: (datum: Record<string, unknown>) =>
+              formatDay(month, Number(datum?.day) || 0),
+          },
+          content: [
+            {
+              key: t('Requests'),
+              value: (datum: Record<string, unknown>) =>
+                t('{{count}} calls', {
+                  count: (Number(datum?.calls) || 0).toLocaleString(),
+                }),
+            },
+          ],
+        },
+      },
     }),
-    [chartData]
+    [chartData, month, t]
   )
 
   const activeDays = useMemo(
