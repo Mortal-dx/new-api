@@ -306,16 +306,16 @@ export function AuditTable(props: AuditTableProps) {
                   className={cn('cursor-pointer', row.hit && ROW_HIT_CLASS)}
                   onClick={() => onDetail(row)}
                 >
-                  <TableCell className='px-4'>
+                  <TableCell className='px-4 text-center'>
                     <span className='block truncate font-medium'>
                       {row.user_name}
                     </span>
                     <CellSub>ID {row.user_id}</CellSub>
                   </TableCell>
-                  <TableCell className='px-4 font-mono text-[12.5px]'>
+                  <TableCell className='px-4 text-center font-mono text-[12.5px]'>
                     <span className='block truncate'>{row.token_name}</span>
                   </TableCell>
-                  <TableCell className='px-4'>
+                  <TableCell className='px-4 text-center'>
                     <span className='font-mono text-[12.5px] font-semibold'>
                       {row.hit && '🚫 '}
                       {row.ip}
