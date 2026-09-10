@@ -97,7 +97,7 @@ export function FilterBar({
         </NativeSelectOption>
         {(accounts ?? []).map((item) => (
           <NativeSelectOption key={item.user_id} value={String(item.user_id)}>
-            {item.name || item.username || String(item.user_id)}
+            {item.username || item.name || String(item.user_id)}
           </NativeSelectOption>
         ))}
       </NativeSelect>
