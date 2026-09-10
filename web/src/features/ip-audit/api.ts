@@ -19,6 +19,7 @@ For commercial licensing, please contact support@quantumnous.com
 import { api } from '@/lib/api'
 
 import type {
+  IpAuditAlertConfig,
   IpAuditApiResponse,
   IpAuditConfig,
   IpAuditDetailData,
@@ -143,9 +144,15 @@ export async function saveIpAuditConfig(
 // Feishu test message
 // ============================================================================
 
-export async function sendIpAuditAlertTest(): Promise<
-  IpAuditApiResponse<string>
-> {
-  const res = await api.post('/api/ip_audit/alert/test')
+// The backend falls back to the saved config for fields omitted from the
+// payload, so the form's current values win without requiring a save first.
+export async function sendIpAuditAlertTest(
+  alert: Pick<IpAuditAlertConfig, 'webhook' | 'appkey' | 'template_id'>
+): Promise<IpAuditApiResponse<string>> {
+  const res = await api.post('/api/ip_audit/alert/test', {
+    webhook: alert.webhook,
+    appkey: alert.appkey,
+    template_id: alert.template_id,
+  })
   return res.data
 }

@@ -205,7 +205,13 @@ export function AlertSettings() {
           <Button
             variant='outline'
             disabled={sendTest.isPending}
-            onClick={() => sendTest.mutate()}
+            onClick={() =>
+              sendTest.mutate({
+                webhook: form.webhook,
+                appkey: form.appkey,
+                template_id: form.template_id,
+              })
+            }
           >
             <Send className='size-3.5' />
             {sendTest.isPending ? t('Testing...') : t('Send Test Message')}

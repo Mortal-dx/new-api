@@ -271,7 +271,7 @@ export function useExportIpAuditCsv() {
 
 export function useSendIpAuditAlertTest() {
   return useMutation({
-    mutationFn: () => sendIpAuditAlertTest(),
+    mutationFn: sendIpAuditAlertTest,
     onSuccess: (res) => {
       if (res.success) {
         toast.success(i18next.t('Test message sent to the Feishu group'))
