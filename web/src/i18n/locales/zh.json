@@ -1,5 +1,8 @@
 {
   "translation": {
+    "360": "360",
+    "1000": "1000",
+    "10000": "10000",
     "Model Nodes": "私有化部署",
     "Deployment Nodes": "部署节点",
     "By Server": "部署节点视图",
@@ -9,9 +12,6 @@
     "Search model / IP": "搜索 模型名 / IP",
     "No deployment nodes found.": "未找到部署节点",
     "No internal model deployment nodes matched the current filter.": "没有匹配当前过滤条件的内部模型部署节点",
-    "360": "360",
-    "1000": "1000",
-    "10000": "10000",
     "_copy": "_复制",
     "，": "，",
     ", and": "，和",
@@ -2078,7 +2078,7 @@
     "footer.columns.related.links.oneApi": "One API",
     "footer.columns.related.title": "相关项目",
     "footer.defaultCopyright": "版权所有。",
-    "footer.new\u0061pi.projectAttributionSuffix": "版权所有，由项目贡献者设计与开发。",
+    "footer.newapi.projectAttributionSuffix": "版权所有，由项目贡献者设计与开发。",
     "For channels added after May 10, 2025, no need to remove \".\" from model names during deployment": "对于 2025 年 5 月 10 日之后添加的渠道，在部署时无需从模型名称中移除 \".\"",
     "For private deployments, format: https://fastgpt.run/api/openapi": "对于私有部署，格式为：https://fastgpt.run/api/openapi",
     "For security, existing access tokens cannot be displayed. Regenerate only when you need a new token.": "出于安全考虑，现有访问令牌无法再次显示。仅在需要新令牌时重新生成。",
@@ -5423,7 +5423,6 @@
     "Alerts are triggered after each audit computation (same delivery as the GPU monitor service: template card first, rich-text card when no template; appkey header when going through the iPaaS gateway). New IP alerts are sent once and not repeated after being marked handled; blacklist hits are controlled by the silence period.": "告警在每次审计计算后触发（与 GPU 监控服务同款推送方式：模板卡片优先，无模板时用富文本卡片；走 iPaaS 网关时带 appkey 请求头）。新增 IP 告警只发一次，标记已处理后不再重复；黑名单命中受静默期控制。",
     "First Seen": "首次出现",
     "Last Call": "最新调用",
-    "Requests": "请求数",
     "Export CSV": "导出 CSV",
     "Last month: {{n}}": "上月 {{n}}",
     "Handled By": "处理人",
@@ -5463,6 +5462,8 @@
     "Manage the project accounts whose API keys are distributed; their calling IPs are audited month over month": "管理 API Key 分发出去的项目账号，其调用 IP 按月环比审计",
     "Remove this account?": "确定移除该监控账号？",
     "This account will no longer be audited; its rows disappear from the audit view.": "移除后该账号不再参与审计，其审计行将从视图中消失。",
-    "Removing...": "移除中..."
+    "Removing...": "移除中...",
+    "Blacklist / Whitelist": "黑白名单",
+    "Handling": "处理"
   }
 }

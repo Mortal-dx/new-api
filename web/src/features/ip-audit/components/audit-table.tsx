@@ -203,7 +203,7 @@ export function AuditTable(props: AuditTableProps) {
     onRemoveFromList,
   } = props
 
-  const renderActions = (row: IpAuditRow) => {
+  const renderListActions = (row: IpAuditRow) => {
     if (row.hit) {
       return (
         <Button variant='outline' size='sm' onClick={() => onRemoveFromList(row, 1)}>
@@ -218,8 +218,6 @@ export function AuditTable(props: AuditTableProps) {
         </Button>
       )
     }
-    const pending = row.is_new && !row.handled
-    const handled = row.is_new && row.handled
     return (
       <>
         <Button
@@ -233,39 +231,49 @@ export function AuditTable(props: AuditTableProps) {
         <Button
           variant='outline'
           size='sm'
-          className='mr-1'
           onClick={() => onAddToList(row, 2)}
         >
           {t('+ White')}
         </Button>
-        {pending && (
-          <Button
-            variant='outline'
-            size='sm'
-            className='border-blue-200 text-blue-600 hover:bg-blue-50 dark:border-blue-800 dark:hover:bg-blue-950'
-            onClick={() => onHandle(row)}
-          >
-            {t('Handle')}
-          </Button>
-        )}
-        {handled && (
-          <Button
-            variant='outline'
-            size='sm'
-            className='border-blue-200 text-blue-600 hover:bg-blue-50 dark:border-blue-800 dark:hover:bg-blue-950'
-            onClick={() => onReopen(row)}
-          >
-            {t('Cancel Handling')}
-          </Button>
-        )}
       </>
+    )
+  }
+
+  // 处理动作只针对未加入名单的新增 IP：待处理 → 标记已处理；已处理 → 撤销
+  const renderHandleAction = (row: IpAuditRow) => {
+    if (row.hit || row.white) {
+      return <span className='text-muted-foreground/40 text-xs'>—</span>
+    }
+    const pending = row.is_new && !row.handled
+    const handled = row.is_new && row.handled
+    if (!pending && !handled) {
+      return <span className='text-muted-foreground/40 text-xs'>—</span>
+    }
+    return pending ? (
+      <Button
+        variant='outline'
+        size='sm'
+        className='border-blue-200 text-blue-600 hover:bg-blue-50 dark:border-blue-800 dark:hover:bg-blue-950'
+        onClick={() => onHandle(row)}
+      >
+        {t('Handle')}
+      </Button>
+    ) : (
+      <Button
+        variant='outline'
+        size='sm'
+        className='border-blue-200 text-blue-600 hover:bg-blue-50 dark:border-blue-800 dark:hover:bg-blue-950'
+        onClick={() => onReopen(row)}
+      >
+        {t('Cancel Handling')}
+      </Button>
     )
   }
 
   return (
     <>
       <div className='overflow-x-auto'>
-        <Table className='min-w-[1460px] table-fixed'>
+        <Table className='min-w-[1560px] table-fixed'>
           <TableHeader>
             <TableRow className='bg-muted/40 hover:bg-muted/40'>
               <TableHead className='w-[190px] px-5'>{t('Account')}</TableHead>
@@ -276,14 +284,15 @@ export function AuditTable(props: AuditTableProps) {
               <TableHead className='w-[150px] px-5'>{t('Consumption')}</TableHead>
               <TableHead className='w-[120px] px-5'>{t('First Seen')}</TableHead>
               <TableHead className='w-[140px] px-5'>{t('Last Call')}</TableHead>
-              <TableHead className='w-[210px] px-5'>{t('Actions')}</TableHead>
+              <TableHead className='w-[200px] px-5'>{t('Blacklist / Whitelist')}</TableHead>
+              <TableHead className='w-[110px] px-5'>{t('Handling')}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {isLoading &&
               Array.from({ length: 6 }).map((_, index) => (
                 <TableRow key={`skeleton-${index}`}>
-                  {Array.from({ length: 9 }).map((__, cell) => (
+                  {Array.from({ length: 10 }).map((__, cell) => (
                     <TableCell key={cell} className='px-5 py-3.5'>
                       <Skeleton className='h-4 w-full' />
                     </TableCell>
@@ -354,7 +363,15 @@ export function AuditTable(props: AuditTableProps) {
                       className='flex flex-wrap items-center gap-1'
                       onClick={(event) => event.stopPropagation()}
                     >
-                      {renderActions(row)}
+                      {renderListActions(row)}
+                    </div>
+                  </TableCell>
+                  <TableCell className='px-5'>
+                    <div
+                      className='flex items-center gap-1'
+                      onClick={(event) => event.stopPropagation()}
+                    >
+                      {renderHandleAction(row)}
                     </div>
                   </TableCell>
                 </TableRow>

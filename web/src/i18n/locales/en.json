@@ -1,5 +1,8 @@
 {
   "translation": {
+    "360": "360",
+    "1000": "1000",
+    "10000": "10000",
     "Model Nodes": "Private Deployment",
     "Deployment Nodes": "Deployment Nodes",
     "By Server": "Deployment Nodes",
@@ -9,9 +12,6 @@
     "Search model / IP": "Search model / IP",
     "No deployment nodes found.": "No deployment nodes found.",
     "No internal model deployment nodes matched the current filter.": "No internal model deployment nodes matched the current filter.",
-    "360": "360",
-    "1000": "1000",
-    "10000": "10000",
     "_copy": "_copy",
     "，": ", ",
     ", and": ", and",
@@ -2078,7 +2078,7 @@
     "footer.columns.related.links.oneApi": "One API",
     "footer.columns.related.title": "Related Projects",
     "footer.defaultCopyright": "All rights reserved.",
-    "footer.new\u0061pi.projectAttributionSuffix": "All rights reserved. Designed and developed by the project contributors.",
+    "footer.newapi.projectAttributionSuffix": "All rights reserved. Designed and developed by the project contributors.",
     "For channels added after May 10, 2025, no need to remove \".\" from model names during deployment": "For channels added after May 10, 2025, no need to remove \".\" from model names during deployment",
     "For private deployments, format: https://fastgpt.run/api/openapi": "For private deployments, format: https://fastgpt.run/api/openapi",
     "For security, existing access tokens cannot be displayed. Regenerate only when you need a new token.": "For security, existing access tokens cannot be displayed. Regenerate only when you need a new token.",
@@ -5423,7 +5423,6 @@
     "Alerts are triggered after each audit computation (same delivery as the GPU monitor service: template card first, rich-text card when no template; appkey header when going through the iPaaS gateway). New IP alerts are sent once and not repeated after being marked handled; blacklist hits are controlled by the silence period.": "Alerts are triggered after each audit computation (same delivery as the GPU monitor service: template card first, rich-text card when no template; appkey header when going through the iPaaS gateway). New IP alerts are sent once and not repeated after being marked handled; blacklist hits are controlled by the silence period.",
     "First Seen": "First Seen",
     "Last Call": "Last Call",
-    "Requests": "Requests",
     "Export CSV": "Export CSV",
     "Last month: {{n}}": "Last month: {{n}}",
     "Handled By": "Handled By",
@@ -5463,6 +5462,8 @@
     "Manage the project accounts whose API keys are distributed; their calling IPs are audited month over month": "Manage the project accounts whose API keys are distributed; their calling IPs are audited month over month",
     "Remove this account?": "Remove this account?",
     "This account will no longer be audited; its rows disappear from the audit view.": "This account will no longer be audited; its rows disappear from the audit view.",
-    "Removing...": "Removing..."
+    "Removing...": "Removing...",
+    "Blacklist / Whitelist": "Blacklist / Whitelist",
+    "Handling": "Handling"
   }
 }
