@@ -336,21 +336,9 @@ export function AuditTable(props: AuditTableProps) {
                   </TableCell>
                   <TableCell className='px-4 text-center'>
                     {row.cur_calls.toLocaleString()}
-                    {row.prev_calls > 0 && (
-                      <CellSub>
-                        {t('Last month: {{n}}', {
-                          n: row.prev_calls.toLocaleString(),
-                        })}
-                      </CellSub>
-                    )}
                   </TableCell>
                   <TableCell className='px-4 text-center'>
                     {row.cur_quota > 0 ? formatQuota(row.cur_quota) : '-'}
-                    {row.prev_quota > 0 && (
-                      <CellSub>
-                        {t('Last month: {{n}}', { n: formatQuota(row.prev_quota) })}
-                      </CellSub>
-                    )}
                   </TableCell>
                   <TableCell className='px-4 text-center text-[12.5px]'>
                     {formatFullDate(row.first_seen)}
