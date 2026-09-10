@@ -273,19 +273,19 @@ export function AuditTable(props: AuditTableProps) {
   return (
     <>
       <div className='overflow-x-auto'>
-        <Table className='table-fixed min-w-[1530px]'>
+        <Table className='table-fixed min-w-[2250px]'>
           <TableHeader>
             <TableRow className='bg-muted/40 hover:bg-muted/40'>
-              <TableHead className='w-[185px] px-4 text-center'>{t('Account')}</TableHead>
-              <TableHead className='w-[195px] px-4 text-center'>{t('Token')}</TableHead>
-              <TableHead className='w-[165px] px-4 text-center'>{t('IP')}</TableHead>
-              <TableHead className='w-[230px] px-4 text-center'>{t('Status')}</TableHead>
-              <TableHead className='w-[105px] px-4 text-center'>{t('Requests')}</TableHead>
-              <TableHead className='w-[105px] px-4 text-center'>{t('Consumption')}</TableHead>
-              <TableHead className='w-[115px] px-4 text-center'>{t('First Seen')}</TableHead>
-              <TableHead className='w-[130px] px-4 text-center'>{t('Last Call')}</TableHead>
-              <TableHead className='w-[170px] px-4 text-center'>{t('Blacklist / Whitelist')}</TableHead>
-              <TableHead className='w-[130px] px-4 text-center'>{t('Handling')}</TableHead>
+              <TableHead className='w-[225px] px-4 text-center'>{t('Account')}</TableHead>
+              <TableHead className='w-[225px] px-4 text-center'>{t('Token')}</TableHead>
+              <TableHead className='w-[225px] px-4 text-center'>{t('IP')}</TableHead>
+              <TableHead className='w-[225px] px-4 text-center'>{t('Status')}</TableHead>
+              <TableHead className='w-[225px] px-4 text-center'>{t('Requests')}</TableHead>
+              <TableHead className='w-[225px] px-4 text-center'>{t('Consumption')}</TableHead>
+              <TableHead className='w-[225px] px-4 text-center'>{t('First Seen')}</TableHead>
+              <TableHead className='w-[225px] px-4 text-center'>{t('Last Call')}</TableHead>
+              <TableHead className='w-[225px] px-4 text-center'>{t('Blacklist / Whitelist')}</TableHead>
+              <TableHead className='w-[225px] px-4 text-center'>{t('Handling')}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
