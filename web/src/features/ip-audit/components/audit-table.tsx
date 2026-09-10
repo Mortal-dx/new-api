@@ -307,7 +307,6 @@ export function AuditTable(props: AuditTableProps) {
                     <span className='block truncate font-medium'>
                       {row.user_name}
                     </span>
-                    <CellSub>ID {row.user_id}</CellSub>
                   </TableCell>
                   <TableCell className='px-4 text-center font-mono text-[12.5px]'>
                     <span className='block truncate'>{row.token_name}</span>
