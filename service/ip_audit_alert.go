@@ -96,9 +96,10 @@ func RunIpAuditAlertJob() {
 		if !shouldSend {
 			continue
 		}
-		account := row.AccountName
+		// 告警卡片同样显示用户账号（username，工号），而非 display_name
+		account := row.UserName
 		if account == "" {
-			account = row.UserName
+			account = row.AccountName
 		}
 		if account == "" {
 			account = fmt.Sprintf("%d", row.UserId)
