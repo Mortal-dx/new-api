@@ -335,7 +335,7 @@ export function AuditTable(props: AuditTableProps) {
                     </div>
                   </TableCell>
                   <TableCell className='px-4 text-center'>
-                    {row.cur_calls.toLocaleString()}
+                    {row.cur_calls > 0 ? row.cur_calls.toLocaleString() : '-'}
                   </TableCell>
                   <TableCell className='px-4 text-center'>
                     {row.cur_quota > 0 ? formatQuota(row.cur_quota) : '-'}

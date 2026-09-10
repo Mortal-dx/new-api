@@ -105,8 +105,12 @@ export function DetailSheet(props: DetailSheetProps) {
   )
 
   const days = detail?.days ?? []
+  // 无调用的日期不进图表：不画空柱、悬浮也不出现日期/次数
   const chartData = useMemo(
-    () => days.map((d) => ({ day: String(d.day), calls: d.calls })),
+    () =>
+      days
+        .filter((d) => d.calls > 0)
+        .map((d) => ({ day: String(d.day), calls: d.calls })),
     [days]
   )
   const chartSpec = useMemo(
@@ -209,7 +213,7 @@ export function DetailSheet(props: DetailSheetProps) {
             <Kv label={t('Token')} value={<span className='font-mono'>{row.token_name}</span>} />
             <Kv
               label={t('Calls (This Month)')}
-              value={row.cur_calls.toLocaleString()}
+              value={row.cur_calls > 0 ? row.cur_calls.toLocaleString() : '-'}
             />
             <Kv
               label={t('Cost (This Month)')}
@@ -217,9 +221,13 @@ export function DetailSheet(props: DetailSheetProps) {
             />
             <Kv
               label={t('Calls (Last Month)')}
-              value={`${row.prev_calls.toLocaleString()}${
-                row.prev_quota > 0 ? ` · ${formatQuota(row.prev_quota)}` : ''
-              }`}
+              value={
+                row.prev_calls > 0
+                  ? `${row.prev_calls.toLocaleString()}${
+                      row.prev_quota > 0 ? ` · ${formatQuota(row.prev_quota)}` : ''
+                    }`
+                  : '-'
+              }
             />
             <Kv
               label={t('First Seen')}
