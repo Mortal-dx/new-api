@@ -22,7 +22,7 @@ import (
 // 三张表：
 //   ip_audits          黑名单/白名单条目（支持单 IP、CIDR 网段、闭区间范围三种形式）
 //   ip_audit_status    每个 (账号, IP) 的处理状态（新增 IP 确认处理）
-//   ip_audit_alert_log 飞书告警静默窗口去重记录
+//   ip_audit_alert_log 飞书告警静默窗口去重 + 上次告警调用计数快照
 
 const (
 	IpAuditTypeBlacklist = 1
@@ -70,6 +70,9 @@ type IpAuditAlertLog struct {
 	Id         uint   `json:"id" gorm:"primaryKey"`
 	AlertKey   string `json:"alert_key" gorm:"size:128;uniqueIndex:uk_ip_audit_alert_key"`
 	LastSentAt int64  `json:"last_sent_at" gorm:"bigint"`
+	// 上次告警时该行的本月累计调用数快照（计数快照 key 按 token 细化），
+	// 下次告警用它计算"较上次新增多少次调用"
+	LastCalls int64 `json:"last_calls" gorm:"bigint;default:0"`
 }
 
 func (IpAuditAlertLog) TableName() string {
@@ -304,6 +307,24 @@ func MarkIpAuditAlertSent(alertKey string) error {
 	return DB.Clauses(clause.OnConflict{
 		Columns:   []clause.Column{{Name: "alert_key"}},
 		DoUpdates: clause.Assignments(map[string]interface{}{"last_sent_at": now}),
+	}).Create(&record).Error
+}
+
+// GetIpAuditAlertCalls 读取计数快照 key 上次告警时记录的本月累计调用量
+func GetIpAuditAlertCalls(callsKey string) int64 {
+	var record IpAuditAlertLog
+	if err := DB.Select("last_calls").Where("alert_key = ?", callsKey).First(&record).Error; err != nil {
+		return 0
+	}
+	return record.LastCalls
+}
+
+// MarkIpAuditAlertCalls 更新计数快照 key 的本月累计调用量（不影响 last_sent_at）
+func MarkIpAuditAlertCalls(callsKey string, calls int64) error {
+	record := IpAuditAlertLog{AlertKey: callsKey, LastCalls: calls}
+	return DB.Clauses(clause.OnConflict{
+		Columns:   []clause.Column{{Name: "alert_key"}},
+		DoUpdates: clause.Assignments(map[string]interface{}{"last_calls": calls}),
 	}).Create(&record).Error
 }
 

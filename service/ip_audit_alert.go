@@ -68,8 +68,10 @@ func RunIpAuditAlertJob() {
 	}
 
 	type pendingAlert struct {
-		key     string
-		anomaly IpAuditAnomaly
+		key      string
+		callsKey string
+		curCalls int64
+		anomaly  IpAuditAnomaly
 	}
 	var alerts []pendingAlert
 	for _, row := range rows {
@@ -96,6 +98,18 @@ func RunIpAuditAlertJob() {
 		if !shouldSend {
 			continue
 		}
+		// 调用量按"较上次告警新增"计算：计数快照 key 细化到令牌
+		// （一次告警可能含同 IP 多令牌多行，静默 key 只按 IP 去重）
+		callsKey := key + "|t|" + row.TokenName
+		delta := row.CurCalls - model.GetIpAuditAlertCalls(callsKey)
+		if delta < 0 {
+			// 跨月累计归零或快照异常：全部计为本期新增
+			delta = row.CurCalls
+		}
+		if delta == 0 {
+			// 静默期过后没有新增调用（如黑名单 IP 已停止调用）：无事态变化，不再打扰
+			continue
+		}
 		// 告警卡片同样显示用户账号（username，工号），而非 display_name
 		account := row.UserName
 		if account == "" {
@@ -105,8 +119,10 @@ func RunIpAuditAlertJob() {
 			account = fmt.Sprintf("%d", row.UserId)
 		}
 		alerts = append(alerts, pendingAlert{
-			key:     key,
-			anomaly: IpAuditAnomaly{Account: account, Ip: row.Ip, Kind: kind, Calls: row.CurCalls},
+			key:      key,
+			callsKey: callsKey,
+			curCalls: row.CurCalls,
+			anomaly:  IpAuditAnomaly{Account: account, Ip: row.Ip, Kind: kind, Calls: delta},
 		})
 	}
 	if len(alerts) == 0 {
@@ -132,6 +148,9 @@ func RunIpAuditAlertJob() {
 		if err := model.MarkIpAuditAlertSent(alert.key); err != nil {
 			common.SysError("ip audit alert: failed to mark sent for " + alert.key + ": " + err.Error())
 		}
+		if err := model.MarkIpAuditAlertCalls(alert.callsKey, alert.curCalls); err != nil {
+			common.SysError("ip audit alert: failed to mark calls for " + alert.callsKey + ": " + err.Error())
+		}
 	}
 	common.SysLog(fmt.Sprintf("ip audit alert sent: %d anomalies, response: %s", len(alerts), respBody))
 }
@@ -143,7 +162,7 @@ func BuildIpAuditMarkdown(anomalies []IpAuditAnomaly) string {
 	md.WriteString("## 🚨 IP 审计异常告警\n\n")
 	md.WriteString("**告警时间**: " + now + "\n")
 	md.WriteString(fmt.Sprintf("**异常数量**: %d\n\n", len(anomalies)))
-	md.WriteString("| 账号 | IP | 类型 | 调用量 |\n")
+	md.WriteString("| 账号 | IP | 类型 | 新增调用 |\n")
 	md.WriteString("|---|---|---|---|\n")
 	for _, anomaly := range anomalies {
 		md.WriteString(fmt.Sprintf("| %s | %s | %s | %d |\n", anomaly.Account, anomaly.Ip, anomaly.Kind, anomaly.Calls))
