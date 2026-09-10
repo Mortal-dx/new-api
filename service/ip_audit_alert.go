@@ -17,7 +17,8 @@ import (
 // 移植自 gpu-monitor-service 的 FeishuNotifyService（Java），
 // payload 统一用 common.Marshal 构建（替代 Java 手工拼 JSON 字符串）。
 
-const ipAuditAlertInterval = time.Hour
+// 5 分钟一轮：黑名单命中/新增 IP 最迟几分钟内推送，兼顾聚合查询开销
+const ipAuditAlertInterval = 5 * time.Minute
 
 // 告警卡片中的异常类型文案
 const (
@@ -33,8 +34,8 @@ type IpAuditAnomaly struct {
 	Calls   int64
 }
 
-// StartIpAuditAlertTask 每小时扫描一次监控账号的本月审计数据，发现异常推送飞书告警。
-// 仅 master 节点执行。
+// StartIpAuditAlertTask 定时（ipAuditAlertInterval）扫描监控账号的本月审计数据，
+// 发现异常推送飞书告警。仅 master 节点执行。
 func StartIpAuditAlertTask() {
 	if !common.IsMasterNode {
 		return

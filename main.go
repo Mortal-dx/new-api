@@ -132,7 +132,7 @@ func main() {
 	// all currently alive nodes in multi-instance deployments.
 	service.StartSystemInstanceReporter()
 
-	// IP audit: hourly scan of monitored accounts, push Feishu alert on anomalies
+	// IP audit: periodic scan of monitored accounts, push Feishu alert on anomalies
 	service.StartIpAuditAlertTask()
 
 	// Wire task polling adaptor factory (breaks service -> relay import cycle).
