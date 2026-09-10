@@ -30,7 +30,6 @@ import {
   NativeSelectOption,
 } from '@/components/ui/native-select'
 import { Switch } from '@/components/ui/switch'
-import dayjs from '@/lib/dayjs'
 
 import { DEFAULT_ALERT_CONFIG, SILENCE_MINUTES_OPTIONS } from '../constants'
 import {
@@ -40,7 +39,7 @@ import {
 } from '../hooks'
 import type { IpAuditAlertConfig } from '../types'
 
-/** 告警设置 tab: Feishu alert form, test button and a static card preview. */
+/** 告警设置 tab: Feishu alert form and test button. */
 export function AlertSettings() {
   const { t } = useTranslation()
   const { data: config } = useIpAuditConfigQuery()
@@ -68,21 +67,6 @@ export function AlertSettings() {
       intent: 'alert',
     })
   }
-
-  const previewAccounts =
-    config?.accounts.map((a) => `${a.name}(${a.user_id})`).join(' / ') || '-'
-
-  const exampleIps = ['172.26.12.50', '223.104.63.17', '172.26.88.234']
-  const previewRows = (config?.accounts ?? []).slice(0, 3).map((account, i) => ({
-    ip: exampleIps[i] ?? `10.0.0.${i + 1}`,
-    name: account.name,
-    type: i === 0 ? `🚫 ${t('Blacklist')}` : `★ ${t('New Pending')}`,
-    calls: [3340, 863, 389][i] ?? 100,
-  }))
-  const previewTable = [
-    `| ${t('IP')} | ${t('Account')} | ${t('Type')} | ${t('Calls (This Month)')} |`,
-    ...previewRows.map((r) => `| ${r.ip} | ${r.name} | ${r.type} | ${r.calls.toLocaleString()} |`),
-  ].join('\n')
 
   return (
     <div>
@@ -220,40 +204,6 @@ export function AlertSettings() {
           <Button disabled={saveConfig.isPending} onClick={handleSave}>
             {saveConfig.isPending ? t('Saving...') : t('Save Config')}
           </Button>
-        </div>
-      </div>
-
-      <div className='bg-card overflow-hidden rounded-xl border'>
-        <div className='flex flex-wrap items-center gap-2.5 border-b px-5 py-3'>
-          <span className='text-[13.5px] font-semibold'>
-            📋 {t('Alert Preview')}
-          </span>
-          <span className='text-muted-foreground/70 text-xs'>
-            {t('Roughly what the card pushed to the Feishu group looks like')}
-          </span>
-        </div>
-        <div className='bg-muted/50 mx-5 my-4 rounded-[10px] border p-3.5 text-[13px] leading-relaxed'>
-          <p className='font-semibold'>
-            🚨 {t('IP Audit Alert {{time}}', {
-              time: dayjs().format('YYYY-MM-DD HH:mm'),
-            })}
-          </p>
-          <p>
-            <span className='font-semibold'>{t('Alert type:')}</span>{' '}
-            {t('Blacklist hit · New pending')}
-          </p>
-          <p>
-            <span className='font-semibold'>{t('Accounts involved:')}</span>{' '}
-            {previewAccounts}
-          </p>
-          <pre className='mt-1 font-mono text-xs whitespace-pre-wrap'>
-            {previewTable}
-          </pre>
-          <p>
-            {t(
-              'Please go to the NewAPI IP Audit page to handle: mark handled / whitelist / blacklist'
-            )}
-          </p>
         </div>
       </div>
 
