@@ -128,7 +128,7 @@ function Pager({
   }
 
   return (
-    <div className='flex flex-wrap items-center justify-end gap-4 border-t px-5 py-3 text-xs text-muted-foreground'>
+    <div className='flex flex-wrap items-center justify-end gap-4 border-t px-4 py-3 text-xs text-muted-foreground'>
       <span>{t('{{total}} items in total', { total })}</span>
       <div className='flex items-center gap-1.5'>
         <Button
@@ -273,19 +273,19 @@ export function AuditTable(props: AuditTableProps) {
   return (
     <>
       <div className='overflow-x-auto'>
-        <Table className='min-w-[1560px] table-fixed'>
+        <Table className='min-w-[1640px] table-fixed'>
           <TableHeader>
             <TableRow className='bg-muted/40 hover:bg-muted/40'>
-              <TableHead className='w-[190px] px-5'>{t('Account')}</TableHead>
-              <TableHead className='w-[170px] px-5'>{t('Token')}</TableHead>
-              <TableHead className='w-[190px] px-5'>{t('IP')}</TableHead>
-              <TableHead className='w-[210px] px-5'>{t('Status')}</TableHead>
-              <TableHead className='w-[160px] px-5'>{t('Requests')}</TableHead>
-              <TableHead className='w-[150px] px-5'>{t('Consumption')}</TableHead>
-              <TableHead className='w-[120px] px-5'>{t('First Seen')}</TableHead>
-              <TableHead className='w-[140px] px-5'>{t('Last Call')}</TableHead>
-              <TableHead className='w-[200px] px-5'>{t('Blacklist / Whitelist')}</TableHead>
-              <TableHead className='w-[110px] px-5'>{t('Handling')}</TableHead>
+              <TableHead className='w-[190px] px-4'>{t('Account')}</TableHead>
+              <TableHead className='w-[170px] px-4'>{t('Token')}</TableHead>
+              <TableHead className='w-[190px] px-4'>{t('IP')}</TableHead>
+              <TableHead className='w-[250px] px-4'>{t('Status')}</TableHead>
+              <TableHead className='w-[160px] px-4'>{t('Requests')}</TableHead>
+              <TableHead className='w-[150px] px-4'>{t('Consumption')}</TableHead>
+              <TableHead className='w-[120px] px-4'>{t('First Seen')}</TableHead>
+              <TableHead className='w-[140px] px-4'>{t('Last Call')}</TableHead>
+              <TableHead className='w-[200px] px-4'>{t('Blacklist / Whitelist')}</TableHead>
+              <TableHead className='w-[120px] px-4'>{t('Handling')}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -293,7 +293,7 @@ export function AuditTable(props: AuditTableProps) {
               Array.from({ length: 6 }).map((_, index) => (
                 <TableRow key={`skeleton-${index}`}>
                   {Array.from({ length: 10 }).map((__, cell) => (
-                    <TableCell key={cell} className='px-5 py-3.5'>
+                    <TableCell key={cell} className='px-4 py-3.5'>
                       <Skeleton className='h-4 w-full' />
                     </TableCell>
                   ))}
@@ -306,14 +306,14 @@ export function AuditTable(props: AuditTableProps) {
                   className={cn('cursor-pointer', row.hit && ROW_HIT_CLASS)}
                   onClick={() => onDetail(row)}
                 >
-                  <TableCell className='px-5'>
+                  <TableCell className='px-4'>
                     <span className='font-medium'>{row.user_name}</span>
                     <CellSub>ID {row.user_id}</CellSub>
                   </TableCell>
-                  <TableCell className='px-5 font-mono text-[12.5px]'>
+                  <TableCell className='px-4 font-mono text-[12.5px]'>
                     {row.token_name}
                   </TableCell>
-                  <TableCell className='px-5'>
+                  <TableCell className='px-4'>
                     <span className='font-mono text-[12.5px] font-semibold'>
                       {row.hit && '🚫 '}
                       {row.ip}
@@ -331,10 +331,10 @@ export function AuditTable(props: AuditTableProps) {
                       </CellSub>
                     )}
                   </TableCell>
-                  <TableCell className='px-5'>
+                  <TableCell className='px-4'>
                     <StatusTags row={row} />
                   </TableCell>
-                  <TableCell className='px-5'>
+                  <TableCell className='px-4'>
                     {row.cur_calls.toLocaleString()}
                     {row.prev_calls > 0 && (
                       <CellSub>
@@ -344,7 +344,7 @@ export function AuditTable(props: AuditTableProps) {
                       </CellSub>
                     )}
                   </TableCell>
-                  <TableCell className='px-5'>
+                  <TableCell className='px-4'>
                     {row.cur_quota > 0 ? formatQuota(row.cur_quota) : '-'}
                     {row.prev_quota > 0 && (
                       <CellSub>
@@ -352,13 +352,13 @@ export function AuditTable(props: AuditTableProps) {
                       </CellSub>
                     )}
                   </TableCell>
-                  <TableCell className='px-5 text-[12.5px]'>
+                  <TableCell className='px-4 text-[12.5px]'>
                     {formatFullDate(row.first_seen)}
                   </TableCell>
-                  <TableCell className='px-5 text-[12.5px]'>
+                  <TableCell className='px-4 text-[12.5px]'>
                     {formatDateTimeShort(row.last_seen)}
                   </TableCell>
-                  <TableCell className='px-5'>
+                  <TableCell className='px-4'>
                     <div
                       className='flex flex-wrap items-center gap-1'
                       onClick={(event) => event.stopPropagation()}
@@ -366,7 +366,7 @@ export function AuditTable(props: AuditTableProps) {
                       {renderListActions(row)}
                     </div>
                   </TableCell>
-                  <TableCell className='px-5'>
+                  <TableCell className='px-4'>
                     <div
                       className='flex items-center gap-1'
                       onClick={(event) => event.stopPropagation()}
