@@ -469,7 +469,6 @@ type IpAuditRow struct {
 	AccountName string `json:"account_name"`
 	TokenName   string `json:"token_name"`
 	Ip          string `json:"ip"`
-	NetType     string `json:"net_type"`
 	CurCalls    int64  `json:"cur_calls"`
 	CurQuota    int64  `json:"cur_quota"`
 	PrevCalls   int64  `json:"prev_calls"`
@@ -615,11 +614,6 @@ func GetIpAuditRows(month string, accounts []IpAuditAccount) ([]IpAuditRow, erro
 		if agg.Ip == "" {
 			continue
 		}
-		parsedIp := common.ParseIP(agg.Ip)
-		netType := "外网"
-		if parsedIp != nil && common.IsPrivateIP(parsedIp) {
-			netType = "内网"
-		}
 		prev, prevSeen := prevAggs[ipAuditStatusKey(agg.UserId, agg.Ip)]
 		white := MatchIpAuditIp(agg.Ip, whiteSet)
 		hit := MatchIpAuditIp(agg.Ip, blackSet)
@@ -636,7 +630,6 @@ func GetIpAuditRows(month string, accounts []IpAuditAccount) ([]IpAuditRow, erro
 			AccountName: accountNames[agg.UserId],
 			TokenName:   agg.TokenName,
 			Ip:          agg.Ip,
-			NetType:     netType,
 			CurCalls:    agg.Calls,
 			CurQuota:    agg.Quota,
 			PrevCalls:   prev.Calls,

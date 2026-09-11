@@ -205,15 +205,9 @@ func GetIpAuditRecordsDetail(c *gin.Context) {
 		return
 	}
 
-	netType := "外网"
-	if parsed := common.ParseIP(ip); parsed != nil && common.IsPrivateIP(parsed) {
-		netType = "内网"
-	}
-
 	data := gin.H{
 		"days":       days,
 		"first_seen": firstSeen.FirstSeen,
-		"net_type":   netType,
 	}
 	statusMap, err := model.GetIpAuditStatusMap([]int{userId})
 	if err != nil {

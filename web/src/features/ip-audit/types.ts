@@ -36,8 +36,6 @@ export interface IpAuditRow {
   user_name: string
   token_name: string
   ip: string
-  /** 'internal' | 'external' (the backend may also send localized literals) */
-  net_type: string
   cur_calls: number
   cur_quota: number
   prev_calls: number
